@@ -2,6 +2,11 @@
 
 A new Flutter project.
 
+# Update:
+- including 807 Pokemon
+- all images will be cached
+- search function included
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
