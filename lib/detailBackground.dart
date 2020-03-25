@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex_app/detailGeneral/detailGeneral.dart';
 import 'package:pokedex_app/detailMore/detailMore.dart';
@@ -14,10 +15,17 @@ class DetailBackground extends StatefulWidget {
 }
 
 class _DetailBackgroundState extends State < DetailBackground > {
-  
+
   Pokemon _pokemon;
-  List<Color> _colors;
-  _DetailBackgroundState(this._pokemon, this._colors);
+  List < Color > _colors;
+  String _id;
+  String _url;
+  _DetailBackgroundState(Pokemon pokemon, List<Color> colors){
+    this._pokemon = pokemon;
+    this._colors = colors;
+    this._id = _formatNum(pokemon.id).substring(1);
+    this._url = 'https://media.bisafans.de/6447cae/thumbs/300x300/pokemon/artwork/${this._id}.png';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +71,13 @@ class _DetailBackgroundState extends State < DetailBackground > {
             left: MediaQuery.of(context).size.width * 0.3,
             child: Container(
               alignment: Alignment.topCenter,
-              child: Image.asset('assets/PokemonImg/${this._pokemon.id}.png', width: 160, height: 160)
+              child: CachedNetworkImage(
+                imageUrl: this._url,
+                placeholder: (context, url) => CircularProgressIndicator(),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+                width: 160, 
+                height: 160,
+              ),
             ),
           ),
         ],
@@ -82,7 +96,7 @@ class _DetailBackgroundState extends State < DetailBackground > {
         Container(
           width: 50,
           height: MediaQuery.of(context).size.width * 0.16,
-          child: Tab(icon: Icon(Icons.info_outline, color: Color.fromRGBO(0, 0, 0, 1)), text: 'Info',),
+          child: Tab(icon: Icon(Icons.info_outline, color: Color.fromRGBO(0, 0, 0, 1)), text: 'Info', ),
         ),
         /*
         Container(
@@ -105,5 +119,15 @@ class _DetailBackgroundState extends State < DetailBackground > {
         ),
       ],
     );
+  }
+
+  static String _formatNum(int n) {
+    if (n <= 9) {
+      return "#00" + n.toString();
+    } else if (n > 9 && n <= 99) {
+      return "#0" + n.toString();
+    } else {
+      return "#" + n.toString();
+    }
   }
 }

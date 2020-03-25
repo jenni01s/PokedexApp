@@ -1,10 +1,26 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex_app/detailBackground.dart';
 import 'package:pokedex_app/pokemonData/pokemon.dart';
 
-class DisplayCard extends StatelessWidget {
-  final Pokemon _pokemon;
+class DisplayCard extends StatefulWidget {
+  Pokemon _pokemon;
   DisplayCard(this._pokemon);
+  @override
+  _DisplayCardState createState() => _DisplayCardState(this._pokemon);
+}
+
+class _DisplayCardState extends State < DisplayCard > {
+  Pokemon _pokemon;
+  String _id;
+  String _url;
+  bool _clicked;
+  _DisplayCardState(Pokemon pokemon) {
+    this._pokemon = pokemon;
+    this._id = _formatNum(pokemon.id).substring(1);
+    this._url = 'https://media.bisafans.de/6447cae/thumbs/300x300/pokemon/artwork/${this._id}.png';
+    this._clicked = false;
+  }
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -16,7 +32,7 @@ class DisplayCard extends StatelessWidget {
       },
       child: Card(
         child: ListTile(
-          leading: Image(image: AssetImage('assets/PokemonImg/${this._pokemon.id}.png')),
+          leading: _showImage(this._clicked, this._url),
           title: Text(this._pokemon.name, style: TextStyle(fontSize: 18)),
           subtitle: Text(_formatNum(this._pokemon.id), style: TextStyle(fontSize: 12)),
           trailing: SingleChildScrollView(
@@ -30,6 +46,29 @@ class DisplayCard extends StatelessWidget {
     );
   }
 
+  Widget _showImage(bool show, String url) {
+    if (show) {
+      return CachedNetworkImage(
+        imageUrl: url,
+        placeholder: (context, url) => CircularProgressIndicator(),
+        errorWidget: (context, url, error) => Icon(Icons.error),
+        width: 50,
+        height: 50
+      );
+    } else {
+      return IconButton(icon: Image.asset('assets/Pokeball.png'), iconSize: 40, onPressed: () {
+        _onClicked();
+      });
+    }
+  }
+
+  void _onClicked() {
+    setState(() {
+      this._clicked = true;
+      return this._clicked;
+    });
+  }
+
   static String _formatNum(int n) {
     if (n <= 9) {
       return "#00" + n.toString();
@@ -40,8 +79,8 @@ class DisplayCard extends StatelessWidget {
     }
   }
 
-  static List<Widget> _typeIcons(List<String> types) {
-    List<Widget> typeIcons = new List<Widget>();
+  static List < Widget > _typeIcons(List < String > types) {
+    List < Widget > typeIcons = new List < Widget > ();
     if (types.length == 1) {
       typeIcons.add(Tab(icon: Image.asset('assets/Types/Types-${types[0]}.png', width: 120, height: 50)));
     } else {
@@ -49,39 +88,6 @@ class DisplayCard extends StatelessWidget {
       typeIcons.add(Tab(icon: Image.asset('assets/Types/Types-${types[1]}.png', width: 50, height: 50)));
     }
     return typeIcons;
-  }
-}
-
-class SearchBar extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 50.0,
-      child: Center(
-        child: TextField(
-          decoration: InputDecoration(
-            prefixIcon: new IconTheme(
-              data: new IconThemeData(color: Colors.grey),
-              child: new Icon(Icons.search),
-            ),
-            filled: true,
-            border: InputBorder.none,
-            hintText: 'Go to Pokemon',
-            contentPadding: const EdgeInsets.only(left: 8.0, bottom: 12, top: 10),
-          ),
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20.0
-          ),
-        ),
-      ),
-      decoration: new BoxDecoration(
-        borderRadius: new BorderRadius.all(new Radius.circular(40.0)),
-        color: Color.fromRGBO(0, 0, 0, 0.25),
-      ),
-      padding: new EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
-      margin: new EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 20.0)
-    );
   }
 
 }

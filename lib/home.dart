@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widgets/flutter_widgets.dart';
 import 'package:pokedex_app/displayCard.dart';
 import 'package:pokedex_app/pokemonData/pokemon.dart';
 
@@ -13,15 +14,13 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState(this._pokemonList);
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State < Home > {
   List < Pokemon > _pokemonList;
   _HomeState(this._pokemonList);
+  bool _searchEnabled = true;
+  final ItemScrollController _controller = ItemScrollController();
+  final TextEditingController _textController = TextEditingController();
 
-  void _updatePokemon(List<Pokemon> pokemonList) {
-    setState(() {
-      this._pokemonList = pokemonList;
-    });
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,18 +43,19 @@ class _HomeState extends State<Home> {
           ),
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(10.0),
-            child: SearchBar(),
+            child: searchBar(),
           ),
         ),
       ),
-      body: ListView.separated(
-        padding: const EdgeInsets.all(2),
-          itemCount: this.widget._pokemonList.length,
+      body: ScrollablePositionedList.separated(
+        padding: const EdgeInsets.all(1),
+          itemScrollController: _controller,
+          itemCount: this._pokemonList.length,
           itemBuilder: (BuildContext context, int index) {
-            Pokemon pokemon = this.widget._pokemonList.elementAt(index);
+            Pokemon pokemon = this._pokemonList.elementAt(index);
             return Container(
               padding: const EdgeInsets.all(2),
-                height: 100,
+                height: 90,
                 child: DisplayCard(pokemon)
             );
           },
@@ -64,5 +64,102 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-}
 
+  Widget searchBar() {
+    return Container(
+      height: 50.0,
+      child: Center(
+        child: TextField(
+          controller: _textController,
+          enabled: _searchEnabled,
+          // enter pressed: 
+          onSubmitted: (text) {
+            _triggerAnimation(_formatTextInput(text));
+          },
+          decoration: InputDecoration(
+            prefixIcon: new IconTheme(
+              data: new IconThemeData(color: Colors.grey),
+              child: new IconButton(icon: Icon(Icons.search), onPressed: () => _triggerAnimation(_formatTextInput(_textController.text))),
+            ),
+            filled: true,
+            border: InputBorder.none,
+            hintText: 'Go to Pokemon',
+            contentPadding: const EdgeInsets.only(left: 8.0, bottom: 12, top: 10),
+          ),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20.0
+          ),
+        ),
+      ),
+      decoration: new BoxDecoration(
+        borderRadius: new BorderRadius.all(new Radius.circular(40.0)),
+        color: Color.fromRGBO(0, 0, 0, 0.25),
+      ),
+      padding: new EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
+      margin: new EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 20.0)
+    );
+  }
+
+
+  _triggerAnimation(id){
+     setState(() {
+      this._searchEnabled = false;
+    });
+    _controller.scrollTo(index: id, duration: Duration(milliseconds: 2500), curve: Curves.fastOutSlowIn);
+     setState(() {
+      this._searchEnabled = true;
+    });
+  } 
+
+  int _formatTextInput(String text) {
+    int num = 0;
+    text = text.replaceAll(' ', '');
+    if (text.isNotEmpty) {
+      // search by Number in Pokedex
+      if (isNumeric(text)) {
+        int textNum = int.parse(text);
+        if (textNum >= 1 && textNum <= 807) {
+          num = textNum - 1;
+        }
+      }
+      // go to certain Region 
+      else if (text == 'Kanto') {
+        num = 0;
+      } else if (text == 'Johto') {
+        num = 151;
+      } else if (text == 'Hoenn') {
+        num = 251;
+      } else if(text == 'Sinnoh') {
+        num = 386;
+      }
+      else if(text == 'Unova' || text == 'Einall') {
+        num = 493;
+      }
+      else if(text == 'Kalos') {
+        num = 649;
+      }
+      else if(text == 'Alola') {
+        num = 721;
+      }
+      else {
+        // search by Name
+        for (Pokemon pokemon in this._pokemonList) {
+          if (pokemon.name.contains(text)) {
+            num = pokemon.id - 1;
+            break;
+          }
+        }
+      }
+    }
+    return num;
+  }
+
+  static bool isNumeric(String s) {
+    if (s == null) {
+      return false;
+    }
+    return double.tryParse(s) != null;
+  }
+
+}

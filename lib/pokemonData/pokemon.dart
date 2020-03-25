@@ -129,7 +129,7 @@ class Pokemon {
       case "poison":
         colors = [Colors.purple[800], Colors.purple[200], Color(0xffc261d4)];
         break;
-      case "steal":
+      case "steel":
         colors = [Colors.blueGrey[700], Colors.blueGrey[200], Color(0xff58A6AA)];
         break;
 
