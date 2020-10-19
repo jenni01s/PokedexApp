@@ -1,7 +1,3 @@
-# pokedex_app
-
-A new Flutter project.
-
 # Update:
 - including 807 Pokemon
 - all images will be cached
