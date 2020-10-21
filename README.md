@@ -3,12 +3,13 @@
 - all clicked images will be cached
 - search function included
 
-- Click on the Pokeball to load a Pokemon: 
+Click on the Pokeball to load a Pokemon: 
+<br>
 <p float="center">
   <img src="https://github.com/jenni01s/PokedexApp/blob/master/Screenshot/pikachu_unselected.png" width="270" height="480">
   <img src="https://github.com/jenni01s/PokedexApp/blob/master/Screenshot/pikachu_selected.png" width="270" height="480"> 
 </p>
-
+<br><br>
 <p float="center">
 <img src="https://github.com/jenni01s/PokedexApp/blob/master/Screenshot/pikachu_info.png" width="270" height="480">
 <img src="https://github.com/jenni01s/PokedexApp/blob/master/Screenshot/pikachu_moves.png" width="270" height="480"> 
