@@ -16,5 +16,5 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-![alt text](https://github.com/jenni01s/PokedexApp/blob/master/Screenshot/pikachu_info.png?raw=true| height = 100)
+![alt text](https://github.com/jenni01s/PokedexApp/blob/master/Screenshot/pikachu_info.png?raw=true){:height="50%" width="50%"}
 
