@@ -4,6 +4,8 @@
 - search function included
 
 <img src="https://github.com/jenni01s/PokedexApp/blob/master/Screenshot/pikachu_info.png" width="270" height="480">
+<img src="https://github.com/jenni01s/PokedexApp/blob/master/Screenshot/pikachu_moves.png" width="270" height="480">
+<img src="https://github.com/jenni01s/PokedexApp/blob/master/Screenshot/pikachu_more.png" width="270" height="480">
 
 ## Getting Started
 
