@@ -3,11 +3,11 @@
 - all images will be cached
 - search function included
 
-|General Infos | Moves | Additional Infos |
-| --- | --- | --- |
-|<img src="https://github.com/jenni01s/PokedexApp/blob/master/Screenshot/pikachu_info.png" width="270" height="480"> |
-|<img src="https://github.com/jenni01s/PokedexApp/blob/master/Screenshot/pikachu_moves.png" width="270" height="480"> |
-|<img src="https://github.com/jenni01s/PokedexApp/blob/master/Screenshot/pikachu_more.png" width="270" height="480">|
+<p float="left">
+<img src="https://github.com/jenni01s/PokedexApp/blob/master/Screenshot/pikachu_info.png" width="270" height="480"> 
+<img src="https://github.com/jenni01s/PokedexApp/blob/master/Screenshot/pikachu_moves.png" width="270" height="480"> 
+<img src="https://github.com/jenni01s/PokedexApp/blob/master/Screenshot/pikachu_more.png" width="270" height="480">
+</p>
 
 ## Getting Started
 
