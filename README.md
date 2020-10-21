@@ -3,7 +3,7 @@
 - all images will be cached
 - search function included
 
-<img src="https://github.com/jenni01s/PokedexApp/blob/master/Screenshot/pikachu_info.png" width="540" height="960">
+<img src="https://github.com/jenni01s/PokedexApp/blob/master/Screenshot/pikachu_info.png" width="270" height="480">
 
 ## Getting Started
 
