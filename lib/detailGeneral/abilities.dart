@@ -22,7 +22,7 @@ class Abilities extends StatelessWidget {
   }
 
   static List<Widget> _listAbContainer(List<Ability> abList, List<Color> colors, BuildContext context) {
-    List<Widget> container = new List<Widget>();
+    List<Widget> container = [];
     for(Ability ab in abList) {
       container.add(_abilityContainer(ab, colors, context));
       container.add(SizedBox(height: MediaQuery.of(context).size.width * 0.01));

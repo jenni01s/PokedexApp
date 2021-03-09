@@ -81,7 +81,7 @@ class _DetailBackgroundState extends State < DetailBackground > {
             ),
           ),
         ],
-        overflow: Overflow.clip,
+        //overflow: Overflow.clip,
       ),
     );
   }

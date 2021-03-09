@@ -80,7 +80,7 @@ class _DisplayCardState extends State < DisplayCard > {
   }
 
   static List < Widget > _typeIcons(List < String > types) {
-    List < Widget > typeIcons = new List < Widget > ();
+    List < Widget > typeIcons = [];
     if (types.length == 1) {
       typeIcons.add(Tab(icon: Image.asset('assets/Types/Types-${types[0]}.png', width: 120, height: 50)));
     } else {

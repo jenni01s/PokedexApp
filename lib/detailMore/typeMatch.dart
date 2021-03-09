@@ -44,7 +44,7 @@ class TypeMatch extends StatelessWidget {
   }
 
   static List < Widget > _typeIcons(List < String > types) {
-    List < Widget > icons = new List < Widget > ();
+    List < Widget > icons = [];
     if (types[0] == "no strengths" && types.length == 1) {
       icons.add(Text("no strengths"));
       return icons;

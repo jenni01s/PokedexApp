@@ -27,7 +27,7 @@ class _MyAppState extends State < MyApp > {
   Future < List < Pokemon >> createPokemonList() async {
     String data = await DefaultAssetBundle.of(context).loadString('assets/Pokemon.json');
     List < dynamic > jsonArr = json.decode(data);
-    List < Pokemon > pokemonList = new List< Pokemon >();
+    List < Pokemon > pokemonList = [];
     for(Map<String,dynamic> obj in jsonArr) {
       pokemonList.add(Pokemon.fromJson(obj));
     }
@@ -66,7 +66,7 @@ class _MyAppState extends State < MyApp > {
       future: futurePokeList,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return FlatButton(
+          return TextButton(
            child: Image(
              image: new AssetImage('assets/Icon.png'),
              fit: BoxFit.fill
