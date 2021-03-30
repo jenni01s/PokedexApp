@@ -4,7 +4,7 @@ import 'package:pokedex_app/pokemonData/ability.dart';
 import 'package:pokedex_app/pokemonData/attack.dart';
 
 
-class Pokemon {
+class Pokemon implements Comparable{
   int _id;
   String _name;
   String _categorie;
@@ -180,6 +180,19 @@ class Pokemon {
       return formatted;
     } else {
       return s[0].toUpperCase() + s.substring(1);
+    }
+  }
+
+  @override
+  int compareTo(other){
+    if(this._id > other._id){
+      return 1;
+    }
+    else if(this._id < other._id){
+      return -1;
+    }
+    else {
+      return 0;
     }
   }
 }
