@@ -16,32 +16,31 @@ class Home extends StatefulWidget {
 class _HomeState extends State < Home > {
   Icon _searchIcon = Icon(Icons.search, color: Colors.grey);
   List < Pokemon > _pokemonList;
-  //bool _searchEnabled = true;
   final TextEditingController _textController = TextEditingController();
-  FocusNode _focus;
+  // FocusNode _focus;
   PokemonSearch _search;
 
   _HomeState(_pokemonList) {
     this._pokemonList = _pokemonList;
     this._search = new PokemonSearch(_pokemonList);
-    this._focus = new FocusNode();
+    // this._focus = new FocusNode();
   }
 
 
   @override
   void initState() {
     super.initState();
-    this._focus.addListener(_onFocusChange);
+    // this._focus.addListener(_onFocusChange);
   }
 
-  void _onFocusChange() {
-    if (this._focus.hasFocus) {
-      showSearch(context: context, delegate: this._search);
-      // this._search.showResults(context);
-    } else {
-      //this._search.close(context, null);
-    }
-  }
+  // void _onFocusChange() {
+  //   if (this._focus.hasFocus) {
+  //     showSearch(context: context, delegate: this._search);
+  //     // this._search.showResults(context);
+  //   } else {
+  //     //this._search.close(context, null);
+  //   }
+  // }
   //TODO: Change Design of App Bar
   @override
   Widget build(BuildContext context) {
@@ -117,8 +116,8 @@ class _HomeState extends State < Home > {
             color: Colors.white,
             fontSize: 20
           ),
-          focusNode: this._focus
-          //onFieldSubmitted: (value) => this._search.showResults(context),
+          // focusNode: this._focus
+          onTap: () => showSearch(context: context, delegate: this._search),
         ),
       ),
       decoration: new BoxDecoration(
@@ -252,21 +251,6 @@ class _HomeState extends State < Home > {
   } else if (text == 'Alola') {
     num = 721;
   }*/
-  //else {
-  // search by Name
-  /*       for (Pokemon pokemon in this._pokemonList) {
-          if (pokemon.name.contains(text)) {
-            num = pokemon.id - 1;
-            break;
-          }
-        }
-    */
-  //}
-
-  //return num;
-
-
-
 
 
   static bool isNumeric(String s) {
@@ -284,52 +268,65 @@ class PokemonSearch extends SearchDelegate < String > {
   PokemonSearch(this._pokemonList);
 
   @override
+  ThemeData appBarTheme(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    return super.appBarTheme(context);
+    // return theme.copy
+  }
+  @override
   List < Widget > buildActions(BuildContext context) {
-    return [IconButton(icon: Icon(Icons.clear), onPressed: () {
-      this.query = "";
-    }), ];
+    return [
+      IconButton(icon: Icon(Icons.clear), onPressed: () {
+        this.query = "";
+      }),
+    ];
   }
 
   @override
   Widget buildLeading(BuildContext context) {
-    return IconButton(icon: Icon(Icons.clear), onPressed: () {
+    return IconButton(icon: Icon(Icons.arrow_back), onPressed: () {
       this.query = "";
+      this.close(context, "");
     });
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    List < Pokemon > filteredList;
+    List < Pokemon > filteredList = [];
     if (query.isNotEmpty) {
-      filteredList = this._pokemonList.where((pokemon) => pokemon.name.toLowerCase().startsWith(this.query.toLowerCase()));
-    } else {
-      filteredList = this._pokemonList;
+      filteredList = this._pokemonList.where((pokemon) => pokemon.name.toLowerCase().startsWith(this.query.toLowerCase())).toList();
     }
-    return
-    ListView.separated(
-      addAutomaticKeepAlives: false,
-      cacheExtent: 100,
-      padding: const EdgeInsets.all(1),
-        itemCount: filteredList.length,
-        itemBuilder: (BuildContext context, int index) {
-          Pokemon pokemon = filteredList.elementAt(index);
-          return Container(
-            padding: const EdgeInsets.all(2),
-              height: 90,
-              child: DisplayCard(pokemon)
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) =>
-        const Divider(),
-    );
+    if (filteredList.isEmpty) {
+      return Container();
+    } else {
+      return
+      ListView.separated(
+        addAutomaticKeepAlives: false,
+        cacheExtent: 100,
+        padding: const EdgeInsets.all(1),
+          itemCount: filteredList.length,
+          itemBuilder: (BuildContext context, int index) {
+            Pokemon pokemon = filteredList.elementAt(index);
+            return Container(
+              padding: const EdgeInsets.all(2),
+                height: 90,
+                child: DisplayCard(pokemon)
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) =>
+          const Divider(),
+      );
+    }
   }
 
   @override
+  void close(BuildContext context, String result) {
+    FocusScope.of(context).unfocus();
+    super.close(context, result);
+  }
+  @override
   Widget buildSuggestions(BuildContext context) {
-    //   return IconButton(icon: Icon(Icons.clear), onPressed: () {
-    //     this.query = "";
-    //   });
-    return TextField();
+    return Container();
   }
 
 }
