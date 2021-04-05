@@ -1,5 +1,5 @@
 # Features
-- including 807 Pokemon (from Generation 1 to 8)
+- Including 807 Pokemon (from Generation 1 to 8)
 - Every Pokemon with shiny and regular sprite
 - Data used from https://pokeapi.co/
 
