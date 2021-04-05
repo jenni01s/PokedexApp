@@ -25,6 +25,7 @@ class _DisplayCardState extends State < DisplayCard > {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        FocusScope.of(context).unfocus();
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => DetailBackground(this._pokemon)),

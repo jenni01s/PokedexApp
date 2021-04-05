@@ -17,6 +17,7 @@ environment:
   sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
+  flutter_custom_clippers: ^1.1.2
   flutter_widgets: ^0.1.12
   cached_network_image: ^2.0.0
   http: ^0.12.0+4
@@ -48,9 +49,9 @@ flutter:
 
   
   assets:
-        - assets/
-        - assets/Types/
-        
+    - assets/
+    - assets/Types/
+    - assets/shockPika.png
         
 
   # To add assets to your application, add an assets section, like this:
