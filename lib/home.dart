@@ -158,11 +158,51 @@ class PokemonSearch extends SearchDelegate < String > {
       this.close(context, "");
     });
   }
+  String get searchFieldLabel => 'Search a Pokemon';
+
+  bool _isNumeric(String s) {
+    if (s == null || s.isEmpty) {
+      return false;
+    }
+    return num.tryParse(s) != null;
+
+  }
 
   @override Widget buildResults(BuildContext context) {
+    List < String > regions = ["kanto", "johto", "hoenn", "sinnoh", "unova", "einall", "kalos", "alola"];
     List < Pokemon > filteredList = [];
     if (query.isNotEmpty) {
-      filteredList = this._pokemonList.where((pokemon) => pokemon.name.toLowerCase().startsWith(this.query.toLowerCase())).toList();
+      if (regions.contains(query.toLowerCase())) {
+        if (query.toLowerCase() == "kanto") {
+          filteredList = this._pokemonList.sublist(0,151);
+        }
+        else if (query.toLowerCase() == "johto") {
+          filteredList = this._pokemonList.sublist(151,251);
+        }
+        else if (query.toLowerCase() == "hoenn") {
+          filteredList = this._pokemonList.sublist(251,386);
+        }
+        else if (query.toLowerCase() == "sinnoh") {
+          filteredList = this._pokemonList.sublist(386,493);
+        }
+        else if (query.toLowerCase() == "unova" || query.toLowerCase() == "einall") {
+          filteredList = this._pokemonList.sublist(493,649);
+        }
+        else if (query.toLowerCase() == "kalos") {
+          filteredList = this._pokemonList.sublist(649,721);
+        }
+        else if (query.toLowerCase() == "alola") {
+          filteredList = this._pokemonList.sublist(721,807);
+        }
+        else{
+          filteredList = [];
+        }
+      } else if (this._isNumeric(query)) {
+        filteredList = this._pokemonList.where((pokemon) => pokemon.id == int.parse(query)).toList();
+      }
+      else {
+        filteredList = this._pokemonList.where((pokemon) => pokemon.name.toLowerCase().startsWith(this.query.toLowerCase())).toList();
+      }
     }
     if (filteredList.isEmpty) {
       return Container(
